@@ -1,4 +1,4 @@
-
+# 1. For build React app
 FROM node:20.11.1-alpine
 
 # Set working directory
@@ -9,14 +9,14 @@ COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 
 # Same as npm install
-RUN npm ci
+RUN npm install
 
 COPY . /app
 
 ENV CI=true
-ENV PORT=3000
+ENV PORT=3001
 
-CMD [ "npm" , "start" ]
+CMD [ "npm", "start" ]
 
 FROM development AS build
 
@@ -34,8 +34,6 @@ useradd -s /bin/bash -m vscode
 groupadd docker
 usermod -aG docker vscode
 EOF
-
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
-
 CMD [ "npm", "start" ]

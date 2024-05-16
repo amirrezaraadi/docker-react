@@ -3,7 +3,7 @@ networks:
   npm:
     name: npm
 services:
-  nginx_service:
+  nginx:
       build:
         context: .
         dockerfile: nginx.dockerfile
@@ -13,12 +13,10 @@ services:
         - 443:443
       volumes:
         - ./src:/var/www/html
-      environment:
-          NODE_ENV: production
       networks:
         - npm
 
-  npm_service:
+  npm:
       build:
         context: .
         dockerfile: node.dockerFile
