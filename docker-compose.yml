@@ -1,0 +1,31 @@
+version: '3.8'
+networks:
+  npm:
+    name: npm
+services:
+  nginx_service:
+      build:
+        context: .
+        dockerfile: nginx.dockerfile
+      container_name: nginx
+      ports:
+        - 80:80
+        - 443:443
+      volumes:
+        - ./src:/var/www/html
+      environment:
+          NODE_ENV: production
+      networks:
+        - npm
+
+  npm_service:
+      build:
+        context: .
+        dockerfile: node.dockerFile
+      container_name: npm
+      volumes:
+        - ./src:/var/www/front
+      working_dir: /var/www/front
+      entrypoint: [ "npm" ]
+      networks:
+        - npm
